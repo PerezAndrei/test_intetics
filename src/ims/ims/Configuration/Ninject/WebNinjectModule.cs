@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ims.DataAccess.Models;
+using ims.DataAccess.Repository;
+using ims.Domain.IServices;
+using ims.Domain.Services;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Common;
@@ -19,21 +23,14 @@ namespace ims.Configuration.Ninject
         }
         private static void RegisterServices(IKernel kernel)
         {
-            //kernel.Bind<IOAuthAuthorizationServerOptions>().To<EdiaryOAuthAuthorizationServerOptions>();
-            //kernel.Bind<IOAuthAuthorizationServerProvider>().To<AuthorizationServerProvider>();
-            //kernel.Bind<IAuthenticationTokenProvider>().To<RefreshTokenProvider>();
-
-            //kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
-            //kernel.Bind<IRepository>().To<EntityFrameworkRepository<ApplicationDbContext>>().InRequestScope();
+            kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
+            kernel.Bind<IRepository>().To<EntityFrameworkRepository<ApplicationDbContext>>().InRequestScope();
             
-
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
-
-
-
+            
             //global init
-            //kernel.Bind<IAccountService>().To<AccountService>();
-            //kernel.Bind<IRefreshTokenClientService>().To<RefreshTokenClientService>();
+            kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IImageService>().To<ImageService>();
 
         }
     }
