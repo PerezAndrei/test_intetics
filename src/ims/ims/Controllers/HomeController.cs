@@ -15,10 +15,11 @@ namespace ims.Controllers
         {
             _userService = userService;
         }
+        [Authorize]
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            var users = _userService.GetUsers();
+            //var users = _userService.GetUsers();
             return View();
         }
     }

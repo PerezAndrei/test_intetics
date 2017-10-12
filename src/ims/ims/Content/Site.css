@@ -15,3 +15,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+a.navbar-brand img {
+    width: 50px;
+    height: 25px;
+}
+
+.navbar-default {
+    background-color: #e2e2e2;
+}
