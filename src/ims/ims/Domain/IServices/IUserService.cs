@@ -9,6 +9,7 @@ namespace ims.Domain.IServices
     public interface IUserService
     {
         IEnumerable<UserVM> GetUsers();
-        void CreateUser(UserVM userVM);
+        void CreateUser(RegisterVM registerVM);
+        bool EmailExist(string email);
     }
 }

@@ -10,7 +10,7 @@ namespace ims.Models
     {
         [Required(ErrorMessage = "Enter UserName")]
         [Display(Name = "Username")]
-        [RegularExpression("^([A-Za-z])", ErrorMessage = "Invalid Username (only a-z or A-Z characters)")]
+        [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "Invalid Username (only a-z or A-Z characters)")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Enter Email")]

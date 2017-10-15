@@ -26,9 +26,22 @@ namespace ims.Domain.Services
             return _mapper.Map<IEnumerable<UserVM>>(users);
         }
 
-        public void CreateUser(UserVM userVM)
+        public void CreateUser(RegisterVM registerVM)
         {
+            User user = new User
+            {
+                Name = registerVM.UserName,
+                Email = registerVM.Email,
+                Password = registerVM.Password
+            };
+            _repository.Create<User>(user);
+            _repository.Save();
             return;
+        }
+
+        public bool EmailExist(string email)
+        {
+            return _repository.GetExists<User>(u=>u.Email.ToLower() == email.ToLower());
         }
     }
 }
