@@ -8,8 +8,15 @@ namespace ims.Controllers
 {
     public class AccountController : Controller
     {
-        
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult LogIn()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult SignUp()
         {
             return View();
         }

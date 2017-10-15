@@ -24,3 +24,13 @@ a.navbar-brand img {
 .navbar-default {
     background-color: #e2e2e2;
 }
+
+.navbar {
+    position: inherit;
+    margin-top: -50px;
+    margin-bottom: 0; 
+}
+
+/*.title-page {
+    margin-bottom: 30px;
+}*/

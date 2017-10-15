@@ -9,15 +9,15 @@
 </head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
+    <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
                 <img alt="Brand" src="../../Content/Images/ims-logo.jpeg">
             </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">LogIn</a></li>
-            <li><a href="#">SignUp</a></li>
+            <li>@Html.ActionLink("LogIn", "LogIn", "Account")</li>
+            <li>@Html.ActionLink("SignUp", "SignUp", "Account")</li>
         </ul>
     </div>
    

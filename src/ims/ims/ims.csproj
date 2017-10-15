@@ -301,6 +301,8 @@
     <Compile Include="Mapping\Mappers\ImageMapper.cs" />
     <Compile Include="Mapping\Mappers\UserMapper.cs" />
     <Compile Include="Models\ImageVM.cs" />
+    <Compile Include="Models\LogInVM.cs" />
+    <Compile Include="Models\RegisterVM.cs" />
     <Compile Include="Models\TagVM.cs" />
     <Compile Include="Models\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -354,6 +356,8 @@
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -373,6 +377,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
+    <Content Include="Views\Account\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
