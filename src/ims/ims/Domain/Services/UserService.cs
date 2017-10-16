@@ -12,7 +12,7 @@ namespace ims.Domain.Services
 {
     public class UserService : IUserService
     {
-        private readonly IMapper _mapper;
+        public readonly IMapper _mapper;
         private readonly IRepository _repository;
         public UserService(IMapper mapper, IRepository repository)
         {
@@ -24,6 +24,16 @@ namespace ims.Domain.Services
         {
             var users = _repository.GetAll<User>();
             return _mapper.Map<IEnumerable<UserVM>>(users);
+        }
+
+        public UserVM GetUserByEmail(string email)
+        {
+            var user = _repository.GetFirst<User>(filter: u => u.Email.ToLower() == email.ToLower());
+            if (user == null) return null;
+            var userVM = _mapper.Map<User, UserVM>(user);
+            var users = _repository.GetAll<User>();
+            var users1 = _mapper.Map<IEnumerable<UserVM>>(users);
+            return _mapper.Map<UserVM>(user);
         }
 
         public void CreateUser(RegisterVM registerVM)

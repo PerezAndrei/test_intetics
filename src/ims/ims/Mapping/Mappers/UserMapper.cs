@@ -7,9 +7,9 @@ namespace ims.Mapping.Mappers
         public UserMapper()
         {
             CreateMap<DataAccess.Entities.User, Models.UserVM>()
-                .PreserveReferences();
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
             CreateMap<Models.UserVM, DataAccess.Entities.User>()
-                .PreserveReferences();
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
         }
     }
 }

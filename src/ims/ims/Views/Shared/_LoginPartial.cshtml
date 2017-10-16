@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Hallo @User.Identity.Name</a></li>
+        <li>@Html.ActionLink("LogOut", "LogOut", "Account")</li>
+    </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("LogIn", "LogIn", "Account")</li>
+        <li>@Html.ActionLink("SignUp", "SignUp", "Account")</li>
+    </ul>
+}
+
+
+
+
+

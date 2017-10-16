@@ -15,7 +15,15 @@ namespace ims.DataAccess.Models
 
         public ApplicationDbContext() : base("IMSDbContext")
         {
-            
+
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Images)
+                .WithRequired(i => i.User);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -19,7 +19,6 @@ namespace ims.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            //var users = _userService.GetUsers();
             return View();
         }
     }

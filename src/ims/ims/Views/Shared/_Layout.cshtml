@@ -11,14 +11,12 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/Home/Index">
                 <img alt="Brand" src="../../Content/Images/ims-logo.jpeg">
             </a>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li>@Html.ActionLink("LogIn", "LogIn", "Account")</li>
-            <li>@Html.ActionLink("SignUp", "SignUp", "Account")</li>
-        </ul>
+        @Html.Partial("_LoginPartial")
+        
     </div>
    
 </div>
