@@ -32,6 +32,10 @@ a.navbar-brand img {
     margin-top: 20px;
 }
 
+.search.search-tag {
+    margin-top: 5px;
+}
+
 .images {
     margin-top: 20px;
 }
@@ -39,4 +43,12 @@ a.navbar-brand img {
 .images img {
     width: 100%;
     height: 100%;
+}
+
+input#add-image-file {
+    display: none;
+}
+
+#clone-add-image-file {
+    width: 200px;
 }

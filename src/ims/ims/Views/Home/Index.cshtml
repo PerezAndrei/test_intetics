@@ -69,10 +69,40 @@
                 <h4 class="modal-title">Add new image</h4>
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
+                <div class="form-group">
+                    <input type="file" id="add-image-file" accept="image/jpeg,image/jpg,image/png,image/tiff">
+                    <button id="clone-add-image-file" class="btn btn-default btn-info">choose file</button>
+                    <p id="error-adding-image" class="text-danger"></p>
+                    <p class="help-block">allowed image formats: jpg, jpeg, png, bmp, tiff (max size: 3MB)</p>
+                </div>
+                <div class="form-group">
+                    <label for="add-image-name">Name</label>
+                    <input type="text" class="form-control" id="add-image-name" placeholder="Name" maxlength="50">
+                    <p class="help-block">max length 50</p>
+                </div>
+                <div class="form-group">
+                    <label for="add-image-description">Description</label>
+                    <textarea class="form-control" id="add-image-description" rows="3" placeholder="Description" maxlength="200"></textarea>
+                    <p class="help-block">max length 200</p>
+                </div>
+                <div class="form-group">
+                    <label for="add-image-tag">Tags</label>
+                    <textarea class="form-control" rows="2" id="add-image-tag" placeholder=""></textarea>
+                    <p class="help-block">max count 6</p>
+                    <div class="row search search-tag">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div id="bloodhound" class="input-group">
+                                <input type="text" class="form-control typeahead" placeholder="Type a tag">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button">Add tag</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
                 <button id="add-new-image" type="button" class="btn btn-success">Add</button>
             </div>
         </div>
