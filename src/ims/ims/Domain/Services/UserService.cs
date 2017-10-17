@@ -12,7 +12,7 @@ namespace ims.Domain.Services
 {
     public class UserService : IUserService
     {
-        public readonly IMapper _mapper;
+        private readonly IMapper _mapper;
         private readonly IRepository _repository;
         public UserService(IMapper mapper, IRepository repository)
         {

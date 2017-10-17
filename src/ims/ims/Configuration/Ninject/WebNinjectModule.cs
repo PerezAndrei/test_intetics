@@ -31,6 +31,7 @@ namespace ims.Configuration.Ninject
             //global init
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IImageService>().To<ImageService>();
+            kernel.Bind<ITagService>().To<TagService>();
 
         }
     }

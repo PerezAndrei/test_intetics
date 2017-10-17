@@ -52,3 +52,25 @@ input#add-image-file {
 #clone-add-image-file {
     width: 200px;
 }
+
+#add-image-tag {
+    height: 100px;
+}
+
+#add-image-tag span.badge{
+    margin-left: 10px;
+}
+
+#add-image-tag span.badge:hover{
+    background: red;
+}
+
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;
+} 
+
