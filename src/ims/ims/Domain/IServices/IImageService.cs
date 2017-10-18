@@ -9,6 +9,6 @@ namespace ims.Domain.IServices
     public interface IImageService
     {
         IEnumerable<ImageVM> GetImagesByUser(int userId);
-        void CreateImage(ImageVM imageVM);
+        void CreateImage();
     }
 }

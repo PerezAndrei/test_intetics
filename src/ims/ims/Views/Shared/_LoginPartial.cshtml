@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+    <input type="hidden" id="identity-user-id" value="@ViewBag.UserId"/>
     <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Hallo @User.Identity.Name</a></li>
         <li>@Html.ActionLink("LogOut", "LogOut", "Account")</li>

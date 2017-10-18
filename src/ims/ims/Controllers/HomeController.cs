@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ims.Domain.IServices;
+using ims.Helpers;
 
 namespace ims.Controllers
 {
@@ -18,6 +19,8 @@ namespace ims.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            int id = User.Identity.GetUserId<int>();
+            ViewBag.UserId = id;
             ViewBag.Title = "Home Page";
             return View();
         }
