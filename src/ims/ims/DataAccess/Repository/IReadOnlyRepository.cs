@@ -39,6 +39,7 @@ namespace ims.DataAccess.Repository
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="filter"></param>
         /// <param name="orderBy"></param>
+        /// <param name="orderByDescending"></param> 
         /// <param name="includeProperties"></param>
         /// <param name="skip"></param>
         /// <param name="take"></param>
@@ -47,6 +48,7 @@ namespace ims.DataAccess.Repository
         IEnumerable<TEntity> Get<TEntity>(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderByDescending = null,
             string includeProperties = null,
             int? skip = null,
             int? take = null,

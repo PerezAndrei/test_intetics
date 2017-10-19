@@ -78,3 +78,47 @@ button.added-tag {
     margin-bottom: 5px;
     margin-right: 5px;
 }
+
+.row.images img {
+    width: 252px;
+    height: 252px;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width:100px) { 
+    .row.images img {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (min-width:430px) { 
+    .row.images img {
+        width: 240px;
+        height: 202px;
+    }
+}
+
+@media (min-width:768px) { 
+    .row.images img {
+        width: 202px;
+        height: 202px;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .row.images img {
+        width: 202px;
+        height: 202px;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .row.images img {
+        width: 252px;
+        height: 252px;
+    }
+      
+}

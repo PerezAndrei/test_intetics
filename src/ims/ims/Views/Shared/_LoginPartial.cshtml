@@ -1,6 +1,13 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+    <ul class="nav navbar-nav">
+        <li>
+            <a href="/Home/Index">
+                Welcome to image management system
+            </a>
+        </li>
+    </ul>
     <input type="hidden" id="identity-user-id" value="@ViewBag.UserId"/>
     <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Hallo @User.Identity.Name</a></li>

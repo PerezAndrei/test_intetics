@@ -6,7 +6,13 @@
 });
 
 (function (ims, $) {
-    ims.InitCommon = function() {
+    ims.InitCommon = function () {
+        $(window).scroll(function(evt) {
+            evt.preventDefault();
+            if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+                console.log("Scroll Postion" + $(window).scrollTop());
+            }
+        });
     };
 
     ims.InitUser = function() {
@@ -34,6 +40,7 @@
             btnAddTagInContainer = $("#add-tag-in-container"),
             inputNewTag = $("#search-image-tag"),
             tagContainer = $("#add-image-tag"),
+            imageContainer = $("#show-images"),
             nameImageNew = $("#add-image-name"),
             descriptionImageNew = $("#add-image-description");
 
@@ -159,15 +166,40 @@
 
             var promise = ims.queryPost(url, contentType, imageFormNew);
             promise.then(resolve => {
-                var res = resolve;
                     $("#modal-add-image").modal("hide");
-                },
-                reject => {
-                    var rej = reject;
+                    getImages(1, true);
                 }
             );
 
         });
+
+        function getImages(pageNumber, isClear) {
+            var url = `/api/users/${ims.userId}/images/page/${pageNumber}`;
+            var type = "Get";
+            var imagesPromise = ims.query(url, type);
+            imagesPromise.then(resolve => {
+                setImagesInContainer(resolve, isClear);
+            });
+
+        }
+
+        function setImagesInContainer(data, isClear) {
+            if (isClear) {
+                imageContainer.empty();
+            }
+            var images = data.images;
+            var pagination = data.pagination;
+            imageContainer.data("paginationCurrentNumber", pagination.currentPageNumber);
+           
+            $.each(images, function (index, item) {
+                var div = $("<div></div>").addClass("col-md-3 col-sm-4 col-xs-6");
+                var a = $("<a></a>").attr("href", "#").addClass("thumbnail");
+                var img = $("<img></img>").attr("src", item.path);
+                a.append(img);
+                div.append(a);
+                imageContainer.append(div);
+            });
+        }
 
         function getTagsFromTagContainer() {
             var tagNames = [];
@@ -243,6 +275,9 @@
     }
 
     ims.query = function (url, type, async) {
+        if (async === undefined) {
+            async = true;
+        }
         return new Promise(function (resolve, reject) {
             $.ajax({
                 url: url,

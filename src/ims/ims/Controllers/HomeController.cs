@@ -5,21 +5,35 @@ using System.Web;
 using System.Web.Mvc;
 using ims.Domain.IServices;
 using ims.Helpers;
+using ims.Models;
 
 namespace ims.Controllers
 {
     public class HomeController : Controller
     {
-        public readonly IUserService _userService;
+        private readonly IUserService _userService;
+        private readonly IImageService _imageService;
 
-        public HomeController(IUserService userService)
+        public HomeController(IUserService userService, IImageService imageService)
         {
             _userService = userService;
+            _imageService = imageService;
         }
         [Authorize]
         public ActionResult Index()
         {
             int id = User.Identity.GetUserId<int>();
+            var countRecordsOnPage = 20;
+            Pagination pagination = new Pagination()
+            {
+                CountRecords = _imageService.GetImagesCountByUser(id),
+                CurrentPageNumber = 1,
+                CountRecordsOnPage = countRecordsOnPage
+            };
+            pagination.SetFirstLastSkipNumbers();
+            var images = _imageService.GetImagesByUserForRange(id, pagination.SkipNumber, countRecordsOnPage);
+            ViewBag.Images = images;
+            ViewBag.Pagination = pagination;
             ViewBag.UserId = id;
             ViewBag.Title = "Home Page";
             return View();

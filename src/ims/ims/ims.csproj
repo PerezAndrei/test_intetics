@@ -271,6 +271,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -308,6 +309,7 @@
     <Compile Include="Mapping\Mappers\UserMapper.cs" />
     <Compile Include="Models\ImageVM.cs" />
     <Compile Include="Models\LogInVM.cs" />
+    <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\RegisterVM.cs" />
     <Compile Include="Models\TagVM.cs" />
     <Compile Include="Models\UserVM.cs" />

@@ -66,6 +66,18 @@ namespace ims.Domain.Services
             }
         }
 
+        public int GetImagesCountByUser(int userId)
+        {
+            var count = _repository.GetCount<Image>(filter: i => i.UserId == userId);
+            return count;
+        }
+
+        public IEnumerable<ImageVM> GetImagesByUserForRange(int userId, int skipValue, int takeValue)
+        {
+            var images = _repository.Get<Image>(filter: i => i.UserId == userId,  orderByDescending: o => o.OrderByDescending(i => i.Id), skip: skipValue, take: takeValue);
+            return _mapper.Map<IEnumerable<ImageVM>>(images);
+        }
+
         #region Private methods
 
         private void PostError()
