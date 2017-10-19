@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ims.Domain.IServices;
+using ims.Models;
 
 namespace ims.Controllers
 {
@@ -31,6 +32,15 @@ namespace ims.Controllers
         {
             return Ok(_tagService.GetNamesOfTags());
         }
+
+        [HttpGet]
+        [Route("popular")]
+        public IHttpActionResult GetTagsPopular()
+        {
+            var tags = _tagService.GetTagsPopular();
+            return Ok(tags ?? new TagVM [0]);
+        }
+
 
     }
 }

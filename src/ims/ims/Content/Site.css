@@ -79,9 +79,11 @@ button.added-tag {
     margin-right: 5px;
 }
 
-.row.images img {
-    width: 252px;
-    height: 252px;
+.row.images{
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 670px; 
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -122,3 +124,4 @@ button.added-tag {
     }
       
 }
+

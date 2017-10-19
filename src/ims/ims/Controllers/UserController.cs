@@ -25,7 +25,7 @@ namespace ims.Controllers
         [Route("{userId:int}/images/page/{pageNumber:int}")]
         public IHttpActionResult GetImagesByUserId(int userId, int pageNumber)
         {
-            var countRecordsOnPage = 20;
+            var countRecordsOnPage = 11;
             Pagination pagination = new Pagination()
             {
                 CountRecords = _imageService.GetImagesCountByUser(userId),
@@ -40,6 +40,26 @@ namespace ims.Controllers
             }
             return Ok(new {images, pagination});
         }
-        
+
+        [HttpGet]
+        [Route("{userId:int}/images/page/{pageNumber:int}/tag/{tagName}")]
+        public IHttpActionResult GetImagesByUserIdForTag(int userId, int pageNumber, string tagName)
+        {
+            var countRecordsOnPage = 11;
+            Pagination pagination = new Pagination()
+            {
+                CountRecords = _imageService.GetImagesCountByUserForTag(userId, tagName),
+                CurrentPageNumber = pageNumber,
+                CountRecordsOnPage = countRecordsOnPage
+            };
+            pagination.SetFirstLastSkipNumbers();
+            var images = _imageService.GetImagesByUserForTagForRange(userId, tagName, pagination.SkipNumber, countRecordsOnPage);
+            if (images == null)
+            {
+                images = new ImageVM[0];
+            }
+            return Ok(new { images, pagination });
+        }
+
     }
 }

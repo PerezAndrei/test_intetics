@@ -23,7 +23,7 @@ namespace ims.Controllers
         public ActionResult Index()
         {
             int id = User.Identity.GetUserId<int>();
-            var countRecordsOnPage = 20;
+            var countRecordsOnPage = 11;
             Pagination pagination = new Pagination()
             {
                 CountRecords = _imageService.GetImagesCountByUser(id),

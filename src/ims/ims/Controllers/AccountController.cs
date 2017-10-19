@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
@@ -36,7 +39,7 @@ namespace ims.Controllers
                 if (user == null || user.Password != model.Password)
                 {
                     ModelState.AddModelError("", "Неверный логин или пароль.");
-                    return View(model);
+                    return View("LogIn", model);
                 }
                 else
                 {
@@ -54,7 +57,7 @@ namespace ims.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            return View(model);
+            return View("LogIn", model);
         }
 
         public ActionResult LogOut()
@@ -92,7 +95,41 @@ namespace ims.Controllers
                 Email = model.Email,
                 Password = model.Password
             };
-            return RedirectToAction("LogIn", "Account", logIn);
+            return RedirectToAction("AutomaticallyLogIn", logIn);
+        }
+
+        public ActionResult AutomaticallyLogIn(LogInVM model)
+        {
+            if (model != null)
+            {
+                UserVM user = _userService.GetUserByEmail(model.Email);
+
+                if (user == null || user.Password != model.Password)
+                {
+                    ModelState.AddModelError("", "Неверный логин или пароль.");
+                    return View("LogIn", model);
+                }
+                else
+                {
+                    ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                    claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), ClaimValueTypes.String));
+                    claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name, ClaimValueTypes.String));
+                    claim.AddClaim(new Claim(ClaimsIdentity.DefaultIssuer, user.Id.ToString(), ClaimValueTypes.String));
+                    claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider",
+                        "OWIN Provider", ClaimValueTypes.String));
+                    AuthenticationManager.SignOut();
+                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    {
+                        IsPersistent = true
+                    }, claim);
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return View("LogIn", model);
+            }
+            
         }
     }
 }

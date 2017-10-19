@@ -2,18 +2,48 @@
     Ims.InitCommon();
     Ims.InitUser();
     Ims.InitImage();
-
+    Ims.InitTag();
 });
 
 (function (ims, $) {
     ims.InitCommon = function () {
-        $(window).scroll(function(evt) {
-            evt.preventDefault();
-            if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
-                console.log("Scroll Postion" + $(window).scrollTop());
-            }
-        });
+        
     };
+
+    ims.InitTag = function () {
+        var containerTagPopular = $("#container-tag-popular");
+
+        (function() {
+            var url = `/api/tags/popular`;
+            var type = "Get";
+            var tagsPopularPromise = ims.query(url, type);
+            tagsPopularPromise.then(result => {
+                setTagPopular(result);
+            });
+        })();
+
+        function setTagPopular(tags) {
+            //containerTagPopular.empty();
+            $.each(tags,
+                function(index, item) {
+                    var a = $("<a></a>").addClass("btn btn-link btn-md").text(item.name);
+                    containerTagPopular.append(a);
+                });
+        }
+
+        (function setTagsAutocomplete() {
+            var url = "/api/tags/names";
+            var type = "Get";
+            var async = false;
+            var promise = ims.query(url, type, async);
+            promise.then(resolve => {
+                    $("#search-tag").autocomplete({
+                        source: resolve
+                    });
+                }
+            );
+        })();
+    }
 
     ims.InitUser = function() {
         ims.userId = getUserId();
@@ -42,8 +72,38 @@
             tagContainer = $("#add-image-tag"),
             imageContainer = $("#show-images"),
             nameImageNew = $("#add-image-name"),
-            descriptionImageNew = $("#add-image-description");
+            scrollContainer = document.querySelector(".row.images"),
+            descriptionImageNew = $("#add-image-description"),
+            inputSearchByTag = $("#search-tag"),
+            btnRunSearchImageByTag = $("#run-search-image-by-tag");
 
+        btnRunSearchImageByTag.click(function() {
+            var tagName = inputSearchByTag.val();
+            if (tagName.trim() === "") return;
+            getImages(1, true, tagName);
+            imageContainer.data("paginationFilter", tagName);
+        });
+
+        $(".row.images").scroll(function (evt) {
+
+            var top = scrollContainer.scrollTop;
+            var cH = scrollContainer.clientHeight;
+            var sH = scrollContainer.scrollHeight;
+
+            if (sH <= top + cH) {
+                console.log("END!!!!!!!!!!!!!!");
+                var data = imageContainer.data();
+                if (data.paginationCurrentNumber < data.paginationCountPages) {
+                    var filter = undefined;
+                    if (data.paginationFilter !== undefined && data.paginationFilter !== "") {
+                        filter = data.paginationFilter;
+                    }
+                    getImages(data.paginationCurrentNumber + 1, false, filter);
+                    console.log("images added");
+                }
+
+            }
+        });
 
         $(document).on("click",
             selectorBtnAddImageFile,
@@ -168,13 +228,18 @@
             promise.then(resolve => {
                     $("#modal-add-image").modal("hide");
                     getImages(1, true);
+                    imageContainer.data("paginationFilter", "");
+                    inputSearchByTag.val("");
                 }
             );
 
         });
 
-        function getImages(pageNumber, isClear) {
+        function getImages(pageNumber, isClear, tagName) {
             var url = `/api/users/${ims.userId}/images/page/${pageNumber}`;
+            if (tagName !== undefined) {
+                url = `/api/users/${ims.userId}/images/page/${pageNumber}/tag/${tagName}`;
+            }
             var type = "Get";
             var imagesPromise = ims.query(url, type);
             imagesPromise.then(resolve => {
@@ -190,6 +255,7 @@
             var images = data.images;
             var pagination = data.pagination;
             imageContainer.data("paginationCurrentNumber", pagination.currentPageNumber);
+            imageContainer.data("paginationCountPages", pagination.countPages);
            
             $.each(images, function (index, item) {
                 var div = $("<div></div>").addClass("col-md-3 col-sm-4 col-xs-6");
@@ -323,39 +389,3 @@
 
 })(window.Ims = window.Ims || {}, jQuery);
 
-$(function () {
-    var availableTags = [
-        "ActionScript",
-        "ActionScript1",
-        "ActionScript2",
-        "ActionScript3",
-        "ActionScript4",
-        "ActionScript5",
-        "ActionScript6",
-        "ActionScript7",
-        "AppleScript8",
-        "Asp",
-        "BASIC",
-        "C",
-        "C++",
-        "Clojure",
-        "COBOL",
-        "ColdFusion",
-        "Erlang",
-        "Fortran",
-        "Groovy",
-        "Haskell",
-        "Java",
-        "JavaScript",
-        "Lisp",
-        "Perl",
-        "PHP",
-        "Python",
-        "Ruby",
-        "Scala",
-        "Scheme"
-    ];
-    $("#search-tag").autocomplete({
-        source: availableTags
-    });
-});

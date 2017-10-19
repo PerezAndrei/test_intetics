@@ -10,5 +10,6 @@ namespace ims.Domain.IServices
     {
         IEnumerable<TagVM> GetTags();
         IEnumerable<string> GetNamesOfTags();
+        IEnumerable<TagVM> GetTagsPopular();
     }
 }

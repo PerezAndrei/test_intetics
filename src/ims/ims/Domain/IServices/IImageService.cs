@@ -10,7 +10,9 @@ namespace ims.Domain.IServices
     {
         IEnumerable<ImageVM> GetImagesByUser(int userId);
         int GetImagesCountByUser(int userId);
+        int GetImagesCountByUserForTag(int userId, string tagName);
         IEnumerable<ImageVM> GetImagesByUserForRange(int userId, int skipValue, int takeValue);
+        IEnumerable<ImageVM> GetImagesByUserForTagForRange(int userId, string tagName, int skipValue, int takeValue);
         void CreateImage();
     }
 }

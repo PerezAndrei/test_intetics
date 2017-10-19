@@ -31,5 +31,16 @@ namespace ims.Domain.Services
             var names = _repository.GetAll<Tag>().Select(t => t.Name);
             return names;
         }
+
+        public IEnumerable<TagVM> GetTagsPopular()
+        {
+            var tags = _repository.Get<Tag>(includeProperties: "Images");
+            if (tags.Any())
+            {
+                var orderedTags = tags.OrderByDescending(t => t.Images.Count).Take(10);
+                return _mapper.Map<IEnumerable<TagVM>>(orderedTags);
+            }
+            return null;
+        }
     }
 }

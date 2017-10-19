@@ -78,6 +78,19 @@ namespace ims.Domain.Services
             return _mapper.Map<IEnumerable<ImageVM>>(images);
         }
 
+        public IEnumerable<ImageVM> GetImagesByUserForTagForRange(int userId, string tagName, int skipValue, int takeValue)
+        {
+            var images = _repository.Get<Image>(filter: i => i.UserId == userId && i.Tags.Any(t => t.Name == tagName), orderByDescending: o => o.OrderByDescending(i => i.Id), skip: skipValue, take: takeValue);
+            return _mapper.Map<IEnumerable<ImageVM>>(images);
+        }
+
+        public int GetImagesCountByUserForTag(int userId, string tagName)
+        {
+            var count =
+                _repository.GetCount<Image>(filter: i => i.UserId == userId && i.Tags.Any(t => t.Name == tagName));
+            return count;
+        }
+
         #region Private methods
 
         private void PostError()
@@ -147,7 +160,7 @@ namespace ims.Domain.Services
                     Tag tag = new Tag
                     {
                         Id = 0,
-                        Name = name
+                        Name = name.ToLower()
                     };
                     //_repository.Create<Tag>(tag);
                     //_repository.Save();
