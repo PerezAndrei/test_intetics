@@ -104,6 +104,7 @@ namespace ims.DataAccess.Repository
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="filter"></param>
         /// <param name="orderBy"></param>
+        /// <param name="orderByDescending"></param>
         /// <param name="includeProperties"></param>
         /// <param name="skip"></param>
         /// <param name="take"></param>
@@ -112,6 +113,7 @@ namespace ims.DataAccess.Repository
         public virtual IEnumerable<TEntity> Get<TEntity>(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderByDescending = null,
             string includeProperties = null,
             int? skip = null,
             int? take = null,
@@ -119,9 +121,9 @@ namespace ims.DataAccess.Repository
             where TEntity : class, IEntity
         {
             if (asNoTraking)
-                return GetQueryable(filter, orderBy, null, includeProperties, skip, take).AsNoTracking().ToList();
+                return GetQueryable(filter, orderBy, orderByDescending, includeProperties, skip, take).AsNoTracking().ToList();
             else
-                return GetQueryable(filter, orderBy, null, includeProperties, skip, take).ToList();
+                return GetQueryable(filter, orderBy, orderByDescending, includeProperties, skip, take).ToList();
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAsync<TEntity>(
