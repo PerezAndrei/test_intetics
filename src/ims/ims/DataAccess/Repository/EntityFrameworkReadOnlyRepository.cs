@@ -21,6 +21,7 @@ namespace ims.DataAccess.Repository
         protected virtual IQueryable<TEntity> GetQueryable<TEntity>(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderByDescending = null,
             string includeProperties = null,
             int? skip = null,
             int? take = null)
@@ -43,6 +44,11 @@ namespace ims.DataAccess.Repository
             if (orderBy != null)
             {
                 query = orderBy(query);
+            }
+
+            if (orderByDescending != null)
+            {
+                query = orderByDescending(query);
             }
 
             if (skip.HasValue)
@@ -77,9 +83,9 @@ namespace ims.DataAccess.Repository
             where TEntity : class, IEntity
         {
             if (asNoTraking)
-                return GetQueryable(null, orderBy, includeProperties, skip, take).AsNoTracking().ToList();
+                return GetQueryable(null, orderBy, null, includeProperties, skip, take).AsNoTracking().ToList();
             else
-                return GetQueryable(null, orderBy, includeProperties, skip, take).ToList();
+                return GetQueryable(null, orderBy, null, includeProperties, skip, take).ToList();
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(
@@ -89,7 +95,7 @@ namespace ims.DataAccess.Repository
             int? take = null)
             where TEntity : class, IEntity
         {
-            return await GetQueryable(null, orderBy, includeProperties, skip, take).ToListAsync();
+            return await GetQueryable(null, orderBy, null, includeProperties, skip, take).ToListAsync();
         }
 
         /// <summary>
@@ -113,9 +119,9 @@ namespace ims.DataAccess.Repository
             where TEntity : class, IEntity
         {
             if (asNoTraking)
-                return GetQueryable(filter, orderBy, includeProperties, skip, take).AsNoTracking().ToList();
+                return GetQueryable(filter, orderBy, null, includeProperties, skip, take).AsNoTracking().ToList();
             else
-                return GetQueryable(filter, orderBy, includeProperties, skip, take).ToList();
+                return GetQueryable(filter, orderBy, null, includeProperties, skip, take).ToList();
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAsync<TEntity>(
@@ -126,7 +132,7 @@ namespace ims.DataAccess.Repository
             int? take = null)
             where TEntity : class, IEntity
         {
-            return await GetQueryable(filter, orderBy, includeProperties, skip, take).ToListAsync();
+            return await GetQueryable(filter, orderBy, null, includeProperties, skip, take).ToListAsync();
         }
 
         public virtual TEntity GetOne<TEntity>(
@@ -134,7 +140,7 @@ namespace ims.DataAccess.Repository
             string includeProperties = "")
             where TEntity : class, IEntity
         {
-            return GetQueryable(filter, null, includeProperties).SingleOrDefault();
+            return GetQueryable(filter, null, null, includeProperties).SingleOrDefault();
         }
 
         public virtual async Task<TEntity> GetOneAsync<TEntity>(
@@ -142,7 +148,7 @@ namespace ims.DataAccess.Repository
             string includeProperties = null)
             where TEntity : class, IEntity
         {
-            return await GetQueryable(filter, null, includeProperties).SingleOrDefaultAsync();
+            return await GetQueryable(filter, null, null, includeProperties).SingleOrDefaultAsync();
         }
 
         public virtual TEntity GetFirst<TEntity>(
@@ -151,7 +157,7 @@ namespace ims.DataAccess.Repository
             string includeProperties = "")
             where TEntity : class, IEntity
         {
-            return GetQueryable(filter, orderBy, includeProperties).FirstOrDefault();
+            return GetQueryable(filter, orderBy, null, includeProperties).FirstOrDefault();
         }
 
         public virtual async Task<TEntity> GetFirstAsync<TEntity>(
@@ -160,7 +166,7 @@ namespace ims.DataAccess.Repository
             string includeProperties = null)
             where TEntity : class, IEntity
         {
-            return await GetQueryable(filter, orderBy, includeProperties).FirstOrDefaultAsync();
+            return await GetQueryable(filter, orderBy, null, includeProperties).FirstOrDefaultAsync();
         }
 
         public virtual TEntity GetById<TEntity>(object id)
